@@ -105,6 +105,7 @@ class bst{
 			traverse(node.right);
 		}
 
+		console.log('');
 		console.log("*".repeat(50));
 		console.log("inOrder traversal ~");
 		traverse(this.root);
@@ -124,6 +125,7 @@ class bst{
 			callback(node.data);
 		}
 
+		console.log('');
 		console.log("*".repeat(50));
 		console.log("postOrder traversal ~");
 		traverse(this.root);
@@ -143,9 +145,36 @@ class bst{
 			traverse(node.right);
 		}
 
+		console.log('');
 		console.log("*".repeat(50));
 		console.log("preOrder traversal ~");
 		traverse(this.root);
+	}
+
+	//levelOrder
+	levelOrder(callback){
+		if(typeof callback !== "function"){
+			throw new Error("callback is required");
+		}
+
+		let result = [];
+		let queue = [this.root];
+		while(queue.length > 0){
+			let size = queue.length;
+			
+			for(let i = 0;i < size;i++){
+				let node = queue.shift();
+				result.push(node.data);
+
+				if(node.left !== null) queue.push(node.left);
+				if(node.right !== null) queue.push(node.right);
+			}
+		}
+
+		console.log('');
+		console.log("*".repeat(50));
+		console.log("iterative levelOrder function~");
+		callback(result);
 	}
 }
 
@@ -153,4 +182,5 @@ class bst{
 const arr = [1,5,6,3,4,2,3,2,1,8,6];
 const t1 = new bst(arr);
 t1.prettyPrint(t1.root);
-const print = (value) => console.log(value);
+
+t1.levelOrder(print);
