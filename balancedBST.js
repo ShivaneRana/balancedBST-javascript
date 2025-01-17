@@ -151,8 +151,8 @@ class bst{
 		traverse(this.root);
 	}
 
-	//levelOrder
-	levelOrder(callback){
+	//iterative levelOrder
+	iLevelOrder(callback){
 		if(typeof callback !== "function"){
 			throw new Error("callback is required");
 		}
@@ -166,8 +166,8 @@ class bst{
 				let node = queue.shift();
 				result.push(node.data);
 
-				if(node.left !== null) queue.push(node.left);
-				if(node.right !== null) queue.push(node.right);
+				if(node.left) queue.push(node.left);
+				if(node.right) queue.push(node.right);
 			}
 		}
 
@@ -176,11 +176,39 @@ class bst{
 		console.log("iterative levelOrder function~");
 		callback(result);
 	}
+
+	//recursive levelOrder function
+	rLevelOrder(callback){
+		if(typeof callback !== "function"){
+			throw new Error("callback is required");
+		}
+
+		let result = [];
+		const traverse = (node) => {
+			if(node.length === 0) return;
+
+			let nextNode = [];
+			for(let i of node){
+				result.push(i.data);
+				if(i.left) nextNode.push(i.left);
+				if(i.right)	nextNode.push(i.right);
+			}
+
+			traverse(nextNode);
+		}
+
+		console.log('');
+		console.log("*".repeat(50));
+		console.log("recursive levelOrder function~");
+		traverse([this.root]);
+		callback(result)
+	}
 }
 
 
 const arr = [1,5,6,3,4,2,3,2,1,8,6];
 const t1 = new bst(arr);
-t1.prettyPrint(t1.root);
-
-t1.levelOrder(print);
+// t1.prettyPrint(t1.root);
+const print = (value) => console.log(value);
+t1.rLevelOrder(print);
+t1.iLevelOrder(print);
