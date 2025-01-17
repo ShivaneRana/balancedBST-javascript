@@ -203,12 +203,35 @@ class bst{
 		traverse([this.root]);
 		callback(result)
 	}
+
+	//depth of a node is the number of edges between the root node and leaf node
+	//depth of a root node is 0
+	depth(node){
+
+		const traverse = (root,value,currentDepth) => {
+			if(root === null) return null;
+			if(root.data === value) return currentDepth;
+			if(value > root.data){
+				return traverse(root.right,value,currentDepth + 1);
+			}
+
+			if(value < root.data){
+				return traverse(root.left,value,currentDepth + 1);
+			}
+		}
+		
+		return	traverse(this.root,node,0);
+	}
+
+	//height of a node is the number of edges in the longes path to a leaf node.
+	//height of a leaf node is 0
+	height(node){
+
+	}
 }
 
 
 const arr = [1,5,6,3,4,2,3,2,1,8,6];
 const t1 = new bst(arr);
-// t1.prettyPrint(t1.root);
-const print = (value) => console.log(value);
-t1.rLevelOrder(print);
-t1.iLevelOrder(print);
+t1.prettyPrint(t1.root);
+console.log(t1.depth(3));
