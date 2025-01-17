@@ -91,14 +91,28 @@ class bst{
 		}
 	}
 
+	//inOrder
+	inOrder(callback){
+		if(typeof callback !== 'function'){
+			throw new Error("callback is required");
+		}
+
+		const traverse = (node) => {
+			if(node === null) return;
+
+			traverse(node.left);
+			callback(node.data);
+			traverse(node.right);
+		}
+
+		traverse(this.root);
+	}
+
 }
 
 
 const arr = [1,5,6,3,4,2,3,2,1,8,6];
 const t1 = new bst(arr);
-t1.insert(t1.root,100);
-t1.insert(t1.root,110);
-t1.insert(t1.root,0);
-t1.insert(t1.root,12);
 t1.prettyPrint(t1.root);
-console.log(t1.find(t1.root,100));
+const print = (value) => console.log(value);
+t1.inOrder(print);
