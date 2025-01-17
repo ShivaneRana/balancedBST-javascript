@@ -105,9 +105,48 @@ class bst{
 			traverse(node.right);
 		}
 
+		console.log("*".repeat(50));
+		console.log("inOrder traversal ~");
 		traverse(this.root);
 	}
 
+	//postOrder
+	postOrder(callback){
+		if(typeof callback !== 'function'){
+			throw new Error("callback is required");
+		}
+
+		const traverse = (node) => {
+			if(node === null) return;
+
+			traverse(node.left);
+			traverse(node.right);
+			callback(node.data);
+		}
+
+		console.log("*".repeat(50));
+		console.log("postOrder traversal ~");
+		traverse(this.root);
+	}
+
+	//preOrderd
+	preOrder(callback){
+		if(typeof callback !== 'function'){
+			throw new Error("callback is required");
+		}
+
+		const traverse = (node) => {
+			if(node === null) return;
+
+			callback(node.data);
+			traverse(node.left);
+			traverse(node.right);
+		}
+
+		console.log("*".repeat(50));
+		console.log("preOrder traversal ~");
+		traverse(this.root);
+	}
 }
 
 
@@ -115,4 +154,3 @@ const arr = [1,5,6,3,4,2,3,2,1,8,6];
 const t1 = new bst(arr);
 t1.prettyPrint(t1.root);
 const print = (value) => console.log(value);
-t1.inOrder(print);
