@@ -259,11 +259,51 @@ class bst{
 		traverse(this.root);
 		this.root = this.buildTree(newArr,0,newArr.length - 1);
 	}
+
+	
+	//delete
+	delete(node){
+		const traversal = (root,key) => {
+			if(root === null){
+				return root;
+			}
+
+			if(root.data === key){
+				if(root.left === null && root.right === null){
+					return null;
+				}
+
+				if(root.left === null){
+					return root.right;
+				}else if(root.right === null){
+					return root.left;
+				}
+
+				function minValue(value){
+					while(value.left !== null){
+						value = value.left;
+					}
+					return value;
+				}
+
+				const temp = minValue(root.right);
+				root.data = temp.data;
+				root.right = traversal(root.right,temp.data);
+			}
+
+			if(key < root.data){
+				root.left = traversal(root.left,key);
+			}else if(key > root.data){
+				root.right = traversal(root.right,key);
+			}
+			return root;
+		}
+
+		traversal(this.root,node);
+	}
 }
 
 
-const arr = [1,5,6,3,4,2,3,2,1,8,6,90];
-const t1 = new bst(arr);
-t1.prettyPrint(t1.root);
-t1.rebalance()
-t1.prettyPrint(t1.root);
+// const arr = [1,5,6,3,4,2,3,2,1,8,6,90,11,14,23,354,345,245,45];
+// const t1 = new bst(arr);
+// t1.prettyPrint(t1.root);
