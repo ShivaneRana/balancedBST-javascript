@@ -231,9 +231,17 @@ class bst{
 		let right = this.height(node.right,len + 1);
 		return Math.max(left,right) + 1;
 	}
+
+	isBalanced(node){
+		if(node === null) return null;
+		const left = this.height(node.left);
+		const right = this.height(node.right);
+		return left - right === 1 || left - right === 0 ? true : false; 
+	}
 }
 
 
-const arr = [1,5,6,3,4,2,3,2,1,8,6];
+const arr = [1,5,6,3,4,2,3,2,1,8,6,90];
 const t1 = new bst(arr);
 t1.prettyPrint(t1.root);
+console.log(t1.isBalanced(t1.root));
