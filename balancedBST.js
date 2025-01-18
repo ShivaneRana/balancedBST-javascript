@@ -209,7 +209,7 @@ class bst{
 	depth(node){
 
 		const traverse = (root,value,currentDepth) => {
-			if(root === null) return null;
+			if(root === null) return -1;
 			if(root.data === value) return currentDepth;
 			if(value > root.data){
 				return traverse(root.right,value,currentDepth + 1);
@@ -225,8 +225,11 @@ class bst{
 
 	//height of a node is the number of edges in the longes path to a leaf node.
 	//height of a leaf node is 0
-	height(node){
-
+	height(node,len = 0){
+		if(node === null) return -1;
+		let left = this.height(node.left, len + 1);
+		let right = this.height(node.right,len + 1);
+		return Math.max(left,right) + 1;
 	}
 }
 
@@ -234,4 +237,3 @@ class bst{
 const arr = [1,5,6,3,4,2,3,2,1,8,6];
 const t1 = new bst(arr);
 t1.prettyPrint(t1.root);
-console.log(t1.depth(3));
