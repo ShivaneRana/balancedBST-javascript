@@ -232,11 +232,32 @@ class bst{
 		return Math.max(left,right) + 1;
 	}
 
+	//check if bst is balanced or not 
+	// difference between the left side and right side should not be more than 1 
 	isBalanced(node){
 		if(node === null) return null;
 		const left = this.height(node.left);
 		const right = this.height(node.right);
 		return left - right === 1 || left - right === 0 ? true : false; 
+	}
+
+	//rebalances bst by converting into an array then building again
+	rebalance(){
+		const newArr = [];
+
+		const traverse = (node) => {
+			if(node === null) return;
+			if(node !== null) newArr.push(node.data);
+			if(node.left){
+				traverse(node.left);
+			}
+			if(node.right){
+				traverse(node.right);
+			}
+		} 
+	
+		traverse(this.root);
+		this.root = this.buildTree(newArr,0,newArr.length - 1);
 	}
 }
 
@@ -244,4 +265,5 @@ class bst{
 const arr = [1,5,6,3,4,2,3,2,1,8,6,90];
 const t1 = new bst(arr);
 t1.prettyPrint(t1.root);
-console.log(t1.isBalanced(t1.root));
+t1.rebalance()
+t1.prettyPrint(t1.root);
